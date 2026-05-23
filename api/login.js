@@ -5,7 +5,7 @@ export default function handler(req, res) {
 
         // The target credentials for the students to brute force
         const TARGET_USERNAME = 'admin';
-        const TARGET_PASSWORD = 'password123'; // Change this to whatever password you want them to guess
+        const TARGET_PASSWORD = 'avrillavigne'; // Change this to whatever password you want them to guess
         const FLAG = 'FLAG{brut3_f0rc3_m4st3r_2026}'; // Change this to your desired flag
 
         if (username === TARGET_USERNAME && password === TARGET_PASSWORD) {
