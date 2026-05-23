@@ -1,7 +1,28 @@
 export default function handler(req, res) {
     // Only allow POST requests for the login form
     if (req.method === 'POST') {
-        const { username, password } = req.body;
+        let body = req.body;
+
+        // Ensure we properly parse the body in case brute-forcing tools
+        // or the browser don't set the correct Content-Type header.
+        if (Buffer.isBuffer(body)) {
+            body = body.toString('utf-8');
+        }
+        if (typeof body === 'string') {
+            try {
+                body = JSON.parse(body);
+            } catch (e) {
+                // If it's not JSON, assume it's URL-encoded string
+                const params = new URLSearchParams(body);
+                body = {
+                    username: params.get('username'),
+                    password: params.get('password')
+                };
+            }
+        }
+
+        const username = body?.username;
+        const password = body?.password;
 
         // The target credentials for the students to brute force
         const TARGET_USERNAME = 'admin';
